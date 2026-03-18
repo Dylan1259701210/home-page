@@ -29,14 +29,7 @@ export const MigrationStep: React.FC<MigrationStepProps> = ({
 			<div className={styles.migrationFlowStepContent}>
 				<p className={styles.migrationFlowStepNumber}>{formattedNumber}</p>
 				<div className={styles.migrationFlowStepTitleContainer}>
-					<p className={styles.migrationFlowStepTitle}>
-						{title.replace(" Complete", "")}
-					</p>
-					<div
-						className={`${styles.migrationFlowStepIcon} ${isMigrated ? styles.migrationFlowStepIconCompleted : ""}`}
-					>
-						<CheckCircleOutlined style={{ fontSize: "18px" }} />
-					</div>
+					<p className={styles.migrationFlowStepTitle}>{title}</p>
 				</div>
 			</div>
 		</div>

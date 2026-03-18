@@ -65,10 +65,13 @@
 /* Middle Arrow Color */
 .migrationFlowMiddleArrow {
 	.migrationFlowArrow {
-		color: #8b5cf6;
 		width: 1.25rem;
 		height: 1.25rem;
 		animation: pulse 2s infinite;
+
+		.migrationFlowArrowIcon {
+			color: #8b5cf6;
+		}
 	}
 }
 
@@ -166,23 +169,33 @@
 }
 
 .migrationFlowArrow {
-	color: #4338ca;
-	width: 1.25rem;
-	height: 1.25rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	flex-shrink: 0;
+
+	.migrationFlowArrowIcon {
+		color: #4338ca;
+		font-size: 1.25rem;
+		font-weight: bold;
+	}
 }
 
 /* Left group arrow color */
 .migrationFlowGroup:first-child {
 	.migrationFlowArrow {
-		color: #6366f1;
+		.migrationFlowArrowIcon {
+			color: #6366f1;
+		}
 	}
 }
 
 /* Right group arrow color */
 .migrationFlowGroup:last-child {
 	.migrationFlowArrow {
-		color: #8b5cf6;
+		.migrationFlowArrowIcon {
+			color: #8b5cf6;
+		}
 	}
 }
 

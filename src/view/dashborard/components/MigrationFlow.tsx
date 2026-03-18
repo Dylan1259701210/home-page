@@ -1,5 +1,4 @@
 import React from "react";
-import { RightOutlined } from "@ant-design/icons";
 import MigrationStep from "./MigrationStep";
 import styles from "./MigrationFlow.module.scss";
 
@@ -31,7 +30,9 @@ export const MigrationFlow: React.FC<MigrationFlowProps> = ({ steps }) => {
 									isMigrated={step.isMigrated}
 								/>
 								{index < leftSteps.length - 1 && (
-									<RightOutlined className={styles.migrationFlowArrow} />
+									<div className={styles.migrationFlowArrow}>
+										<span className={styles.migrationFlowArrowIcon}>→</span>
+									</div>
 								)}
 							</React.Fragment>
 						))}
@@ -43,7 +44,9 @@ export const MigrationFlow: React.FC<MigrationFlowProps> = ({ steps }) => {
 
 				{/* Middle Arrow */}
 				<div className={styles.migrationFlowMiddleArrow}>
-					<RightOutlined className={styles.migrationFlowArrow} />
+					<div className={styles.migrationFlowArrow}>
+						<span className={styles.migrationFlowArrowIcon}>→</span>
+					</div>
 				</div>
 
 				{/* Right Group */}
@@ -57,7 +60,9 @@ export const MigrationFlow: React.FC<MigrationFlowProps> = ({ steps }) => {
 									isMigrated={step.isMigrated}
 								/>
 								{index < rightSteps.length - 1 && (
-									<RightOutlined className={styles.migrationFlowArrow} />
+									<div className={styles.migrationFlowArrow}>
+										<span className={styles.migrationFlowArrowIcon}>→</span>
+									</div>
 								)}
 							</React.Fragment>
 						))}

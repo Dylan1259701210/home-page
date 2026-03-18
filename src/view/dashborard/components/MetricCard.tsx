@@ -17,7 +17,6 @@ const formatNumber = (num: string): string => {
 export const MetricCard: React.FC<MetricCardProps> = ({
 	number,
 	title,
-	badge,
 	isMigrated = false,
 }) => {
 	const formattedNumber = formatNumber(number);
@@ -30,11 +29,6 @@ export const MetricCard: React.FC<MetricCardProps> = ({
 			<div className={styles.sasMetricCardContent}>
 				<p className={styles.sasMetricNumber}>{formattedNumber}</p>
 				<p className={styles.sasMetricTitle}>{title}</p>
-				{badge && (
-					<span className={isMigrated ? styles.sasMetricBadgeMigrated : styles.sasMetricBadge}>
-						{badge}
-					</span>
-				)}
 			</div>
 		</div>
 	);
