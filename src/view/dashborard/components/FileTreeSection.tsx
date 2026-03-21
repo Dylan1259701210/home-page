@@ -1,13 +1,13 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
 	SearchOutlined,
 	FolderOutlined,
 	FileOutlined,
 	UpOutlined,
 	DownOutlined,
-	RightOutlined,
-	LinkOutlined,
 } from "@ant-design/icons";
+import { Modal } from "antd";
+import FileTreeNode from "./FileTreeNode";
 import styles from "./FileTreeSection.module.scss";
 
 interface FileTreeNodeType {
@@ -31,6 +31,28 @@ export const FileTreeSection: React.FC<FileTreeSectionProps> = ({
 	const [expandedFolders, setExpandedFolders] = useState<Set<string>>(
 		new Set(),
 	);
+	const [checkedOutItems, setCheckedOutItems] = useState<Set<string>>(
+		new Set(),
+	);
+	const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+	const [currentItemId, setCurrentItemId] = useState<string>("");
+
+	// 默认展开更多层级
+	useEffect(() => {
+		const expandAll = (nodes: FileTreeNodeType[], depth: number = 0) => {
+			if (depth > 2) return; // 展开到第3层
+			nodes.forEach((node) => {
+				if (node.type === "folder") {
+					expandedFolders.add(node.id);
+					if (node.children) {
+						expandAll(node.children, depth + 1);
+					}
+				}
+			});
+		};
+		expandAll(fileTreeData);
+		setExpandedFolders(new Set(expandedFolders));
+	}, []);
 
 	const toggleFolder = (id: string) => {
 		const newExpanded = new Set(expandedFolders);
@@ -71,164 +93,114 @@ export const FileTreeSection: React.FC<FileTreeSectionProps> = ({
 		return filterNodes(fileTreeData);
 	}, [searchTerm, fileTreeData]);
 
-	const handleLinkClick = (e: React.MouseEvent, link: string) => {
-		e.stopPropagation();
-		window.open(`http://${link}`, "_blank");
+	const handleCheckout = (id: string) => {
+		setCurrentItemId(id);
+		setShowCheckoutModal(true);
+	};
+
+	const confirmCheckout = () => {
+		const newCheckedOut = new Set(checkedOutItems);
+		newCheckedOut.add(currentItemId);
+		setCheckedOutItems(newCheckedOut);
+		setShowCheckoutModal(false);
+		setCurrentItemId("");
+	};
+
+	const handleCheckin = (id: string) => {
+		const newCheckedOut = new Set(checkedOutItems);
+		newCheckedOut.delete(id);
+		setCheckedOutItems(newCheckedOut);
 	};
 
 	return (
-		<section className={styles.fileTreeSection}>
-			<button
-				onClick={() => setIsFileTreeExpanded(!isFileTreeExpanded)}
-				className={styles.fileTreeSectionHeader}
-			>
-				<div className={styles.fileTreeSectionHeaderLeft}>
-					<div className={styles.fileTreeSectionHeaderIcon}>
-						<FolderOutlined className={styles.fileTreeSectionHeaderIconSvg} />
+		<>
+			<section className={styles.fileTreeSection}>
+				<button
+					onClick={() => setIsFileTreeExpanded(!isFileTreeExpanded)}
+					className={styles.fileTreeSectionHeader}
+				>
+					<div className={styles.fileTreeSectionHeaderLeft}>
+						<div className={styles.fileTreeSectionHeaderIcon}>
+							<FolderOutlined className={styles.fileTreeSectionHeaderIconSvg} />
+						</div>
+						<div className={styles.fileTreeSectionHeaderText}>
+							<h2 className={styles.fileTreeSectionHeaderTitle}>
+								SAS Server Migration Latest Update
+							</h2>
+						</div>
 					</div>
-					<div className={styles.fileTreeSectionHeaderText}>
-						<h2 className={styles.fileTreeSectionHeaderTitle}>
-							SAS Server Migration latest Update
-						</h2>
+					<div className={styles.fileTreeSectionHeaderRight}>
+						<div className={styles.fileTreeSectionHeaderStatus}></div>
+						{isFileTreeExpanded ? (
+							<UpOutlined className={styles.fileTreeSectionHeaderToggle} />
+						) : (
+							<DownOutlined className={styles.fileTreeSectionHeaderToggle} />
+						)}
 					</div>
-				</div>
-				<div className={styles.fileTreeSectionHeaderRight}>
-					<div className={styles.fileTreeSectionHeaderStatus}></div>
-					{isFileTreeExpanded ? (
-						<UpOutlined className={styles.fileTreeSectionHeaderToggle} />
-					) : (
-						<DownOutlined className={styles.fileTreeSectionHeaderToggle} />
-					)}
-				</div>
-			</button>
+				</button>
 
-			{isFileTreeExpanded && (
-				<div className={styles.fileTreeSectionContent}>
-					<div className={styles.fileTreeSectionContentInner}>
-						<div className={styles.fileTreeSectionContentSearch}>
-							<SearchOutlined className={styles.searchIcon} />
-							<input
-								type="text"
-								placeholder="Search files or folders..."
-								value={searchTerm}
-								onChange={(e) => setSearchTerm(e.target.value)}
-								className={styles.searchInput}
-							/>
-							{searchTerm && (
-								<button
-									onClick={() => setSearchTerm("")}
-									className={styles.searchClear}
-								>
-									<svg
-										className={styles.searchClearIcon}
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
+				{isFileTreeExpanded && (
+					<div className={styles.fileTreeSectionContent}>
+						<div className={styles.fileTreeSectionContentInner}>
+							<div className={styles.fileTreeSectionContentSearch}>
+								<SearchOutlined className={styles.searchIcon} />
+								<input
+									type="text"
+									placeholder="Search files or folders..."
+									value={searchTerm}
+									onChange={(e) => setSearchTerm(e.target.value)}
+									className={styles.searchInput}
+								/>
+								{searchTerm && (
+									<button
+										onClick={() => setSearchTerm("")}
+										className={styles.searchClear}
 									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M6 18L18 6M6 6l12 12"
+										<svg
+											className={styles.searchClearIcon}
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth={2}
+												d="M6 18L18 6M6 6l12 12"
+											/>
+										</svg>
+									</button>
+								)}
+							</div>
+
+							<div className={styles.fileTreeSectionContentGrid}>
+								{filteredFileTree.map((rootNode) => (
+									<div key={rootNode.id} className={styles.fileTreeNode}>
+										<FileTreeNode
+											node={rootNode}
+											isExpanded={expandedFolders.has(rootNode.id)}
+											onToggle={toggleFolder}
+											depth={0}
+											checkedOutItems={checkedOutItems}
+											onCheckout={handleCheckout}
+											onCheckin={handleCheckin}
 										/>
-									</svg>
-								</button>
-							)}
-						</div>
-
-						<div className={styles.fileTreeSectionContentGrid}>
-							{filteredFileTree.map((rootNode) => (
-								<div key={rootNode.id} className={styles.fileTreeNode}>
-									<div
-										onClick={() => toggleFolder(rootNode.id)}
-										className={styles.fileTreeNodeHeader}
-									>
-										<div className={styles.fileTreeNodeHeaderToggle}>
-											{expandedFolders.has(rootNode.id) ? (
-												<DownOutlined
-													className={styles.fileTreeNodeHeaderToggleIcon}
-												/>
-											) : (
-												<RightOutlined
-													className={styles.fileTreeNodeHeaderToggleIcon}
-												/>
-											)}
-										</div>
-										<FolderOutlined className={styles.fileTreeNodeHeaderIcon} />
-										<span className={styles.fileTreeNodeHeaderName}>
-											{rootNode.name}
-										</span>
-										{rootNode.count !== undefined && (
-											<span className={styles.fileTreeNodeHeaderCount}>
-												{rootNode.count}
-											</span>
-										)}
 									</div>
-									{expandedFolders.has(rootNode.id) && rootNode.children && (
-										<div className={styles.fileTreeNodeChildren}>
-											{rootNode.children.slice(0, 3).map((child) => (
-												<div
-													key={child.id}
-													className={styles.fileTreeNodeChildrenItem}
-												>
-													{child.type === "folder" ? (
-														<FolderOutlined
-															className={`${styles.fileTreeNodeChildrenItemIcon} ${styles.folder}`}
-														/>
-													) : (
-														<FileOutlined
-															className={`${styles.fileTreeNodeChildrenItemIcon} ${styles.file}`}
-														/>
-													)}
-													<div
-														style={{
-															display: "flex",
-															alignItems: "center",
-															gap: "4px",
-														}}
-													>
-														<span
-															className={`${styles.fileTreeNodeChildrenItemName} ${child.link ? styles.linkText : ""}`}
-															onClick={(e) =>
-																child.link && handleLinkClick(e, child.link)
-															}
-															style={{
-																cursor: child.link ? "pointer" : "default",
-															}}
-														>
-															{child.name}
-														</span>
-														{child.link && (
-															<LinkOutlined
-																style={{ fontSize: "12px", cursor: "pointer" }}
-																className={styles.externalLink}
-																onClick={(e) => handleLinkClick(e, child.link!)}
-															/>
-														)}
-													</div>
-													{child.count !== undefined && (
-														<span
-															className={styles.fileTreeNodeChildrenItemCount}
-														>
-															{child.count}
-														</span>
-													)}
-												</div>
-											))}
-											{rootNode.children.length > 3 && (
-												<span className={styles.fileTreeNodeChildrenMore}>
-													+{rootNode.children.length - 3} more...
-												</span>
-											)}
-										</div>
-									)}
-								</div>
-							))}
+								))}
+							</div>
 						</div>
 					</div>
-				</div>
-			)}
-		</section>
+				)}
+			</section>
+			<Modal
+				open={showCheckoutModal}
+				title="Confirm Checkout"
+				onCancel={() => setShowCheckoutModal(false)}
+				onOk={confirmCheckout}
+			>
+				<p>Are you sure you want to checkout this item?</p>
+			</Modal>
+		</>
 	);
 };
 

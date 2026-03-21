@@ -1,253 +1,198 @@
-/* Migration Flow Styles */
-.migrationFlow {
-	margin-top: 3rem;
+/* ============================================
+   MigrationFlow - Light 模式
+   第一阶段(自动化): 橙红色调
+   第二阶段(人工): 深红色调
+   ============================================ */
+
+.flow {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
 }
 
-.migrationFlowTitle {
-	font-size: 1.25rem;
-	font-weight: 600;
-	color: #1e1b4b;
-	margin-bottom: 1.5rem;
-	display: flex;
-	align-items: center;
-	gap: 0.75rem;
-	font-family:
-		"Poppins",
-		"Open Sans",
-		ui-sans-serif,
-		system-ui,
-		-apple-system,
-		BlinkMacSystemFont,
-		"Segoe UI",
-		Roboto,
-		"Helvetica Neue",
-		Arial,
-		"Noto Sans",
-		sans-serif;
+/* 头部 */
+.flowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #f0f2f5;
 }
 
-/* All steps in one row */
-.migrationFlowStepsContainer {
-	display: flex;
-	align-items: center;
-	width: 100%;
-	gap: 1rem;
+.flowTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-	@media (max-width: 1024px) {
-		flex-direction: column;
-		gap: 1.5rem;
-	}
-
-	@media (max-width: 768px) {
-		gap: 1.25rem;
-	}
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 15px;
+    background: var(--primary);
+    border-radius: 2px;
+  }
 }
 
-/* Middle Arrow */
-.migrationFlowMiddleArrow {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 0;
-	background: transparent;
-	border: none;
-	backdrop-filter: none;
-	transition: all 0.3s ease;
-	margin-top: 1.25rem;
-
-	@media (max-width: 1024px) {
-		transform: rotate(90deg);
-		margin-top: 0;
-		margin: 0.5rem 0;
-	}
+.flowSubtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }
 
-/* Middle Arrow Color */
-.migrationFlowMiddleArrow {
-	.migrationFlowArrow {
-		width: 1.25rem;
-		height: 1.25rem;
-		animation: pulse 2s infinite;
-
-		.migrationFlowArrowIcon {
-			color: #8b5cf6;
-		}
-	}
+/* 主体 */
+.flowBody {
+  padding: 18px;
 }
 
-/* Animation */
-@keyframes pulse {
-	0%,
-	100% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0.7;
-	}
+/* 流程步骤容器 */
+.stepsContainer {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
 }
 
-/* Group styles */
-.migrationFlowGroup {
-	flex: 1;
-	border-radius: 1rem;
-	padding: 1.5rem;
-	transition: all 0.3s ease;
-	backdrop-filter: blur(16px);
-	border: 1px solid rgba(255, 255, 255, 0.4);
-	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-	position: relative;
-	overflow: hidden;
+/* ===== 第一阶段：自动化 ===== */
+.stage1 {
+  flex: 1;
+  background: linear-gradient(135deg, #fff5f4 0%, #fff0ee 100%);
+  border: 1px solid rgba(238, 53, 36, 0.12);
+  border-radius: 10px;
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
 
-	@media (max-width: 768px) {
-		padding: 1.25rem;
-	}
-
-	@media (max-width: 640px) {
-		padding: 1rem;
-	}
-
-	&::before {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		height: 1px;
-		background: linear-gradient(
-			90deg,
-			transparent,
-			rgba(255, 255, 255, 0.6),
-			transparent
-		);
-	}
-
-	&:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
-		border-color: rgba(255, 255, 255, 0.6);
-	}
+  /* 顶部色条 */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ff6b35, var(--primary));
+    border-radius: 10px 10px 0 0;
+  }
 }
 
-/* Left Group Styles */
-.migrationFlowGroup:first-child {
-	background: linear-gradient(
-		135deg,
-		rgba(99, 102, 241, 0.1),
-		rgba(129, 140, 248, 0.05)
-	);
-	border: 1px solid rgba(99, 102, 241, 0.3);
+/* ===== 第二阶段：人工 ===== */
+.stage2 {
+  flex: 1;
+  background: linear-gradient(135deg, #fdf2f2 0%, #fce8e8 100%);
+  border: 1px solid rgba(192, 57, 43, 0.12);
+  border-radius: 10px;
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+
+  /* 顶部色条 */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-dark), #922b21);
+    border-radius: 10px 10px 0 0;
+  }
 }
 
-/* Right Group Styles */
-.migrationFlowGroup:last-child {
-	background: linear-gradient(
-		135deg,
-		rgba(139, 92, 246, 0.1),
-		rgba(124, 58, 237, 0.05)
-	);
-	border: 1px solid rgba(139, 92, 246, 0.3);
+/* 步骤行 */
+.stepsRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+  padding-top: 6px;
 }
 
-/* Steps within each group */
-.migrationFlowGroupSteps {
-	display: flex;
-	align-items: center;
-	width: 100%;
-	gap: 0.75rem;
-	margin-bottom: 1.5rem;
-
-	@media (max-width: 768px) {
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.5rem;
-		margin-bottom: 1.25rem;
-	}
-
-	@media (max-width: 640px) {
-		margin-bottom: 1rem;
-	}
+/* 箭头 */
+.stepArrow {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
-.migrationFlowArrow {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-shrink: 0;
-
-	.migrationFlowArrowIcon {
-		color: #4338ca;
-		font-size: 1.25rem;
-		font-weight: bold;
-	}
+.arrowIcon {
+  font-size: 0.85rem;
+  font-weight: bold;
 }
 
-/* Left group arrow color */
-.migrationFlowGroup:first-child {
-	.migrationFlowArrow {
-		.migrationFlowArrowIcon {
-			color: #6366f1;
-		}
-	}
+.stage1 .arrowIcon { color: rgba(238, 53, 36, 0.35); }
+.stage2 .arrowIcon { color: rgba(192, 57, 43, 0.35); }
+
+/* 向下箭头 */
+.downArrow {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+  align-self: stretch;
 }
 
-/* Right group arrow color */
-.migrationFlowGroup:last-child {
-	.migrationFlowArrow {
-		.migrationFlowArrowIcon {
-			color: #8b5cf6;
-		}
-	}
+.downArrowIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  font-weight: bold;
 }
 
-/* Group descriptions */
-.migrationFlowGroupDescription {
-	display: flex;
-	align-items: center;
-	gap: 0.75rem;
-	padding: 0.875rem 1.5rem;
-	border-radius: 0.75rem;
-	font-size: 0.875rem;
-	font-weight: 500;
-	justify-content: center;
-	transition: all 0.3s ease;
-	font-family:
-		"Poppins",
-		"Open Sans",
-		ui-sans-serif,
-		system-ui,
-		-apple-system,
-		BlinkMacSystemFont,
-		"Segoe UI",
-		Roboto,
-		"Helvetica Neue",
-		Arial,
-		"Noto Sans",
-		sans-serif;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-	&:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-	}
-
-	@media (max-width: 640px) {
-		padding: 0.75rem 1.25rem;
-		font-size: 0.8125rem;
-	}
+.stage1 + .downArrow .downArrowIcon {
+  background: linear-gradient(135deg, #ff6b35, var(--primary));
+  color: white;
+  box-shadow: 0 3px 10px rgba(238, 53, 36, 0.25);
 }
 
-/* Left Group Description */
-.migrationFlowGroup:first-child {
-	.migrationFlowGroupDescription {
-		background: linear-gradient(135deg, #6366f1, #818cf8);
-		color: white;
-	}
+.stage2 + .downArrow .downArrowIcon,
+.stage2 .downArrowIcon {
+  background: linear-gradient(135deg, var(--primary-dark), #922b21);
+  color: white;
+  box-shadow: 0 3px 10px rgba(192, 57, 43, 0.25);
 }
 
-/* Right Group Description */
-.migrationFlowGroup:last-child {
-	.migrationFlowGroupDescription {
-		background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-		color: white;
-	}
+/* 阶段标签 */
+.stageLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.stage1 .stageLabel {
+  background: linear-gradient(135deg, #ff6b35, var(--primary));
+  color: white;
+  box-shadow: 0 2px 8px rgba(238, 53, 36, 0.2);
+}
+
+.stage2 .stageLabel {
+  background: linear-gradient(135deg, var(--primary-dark), #922b21);
+  color: white;
+  box-shadow: 0 2px 8px rgba(192, 57, 43, 0.2);
+}
+
+/* 响应式 */
+@media (max-width: 800px) {
+  .stepsContainer {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .downArrow {
+    transform: rotate(90deg);
+    padding: 0;
+  }
 }

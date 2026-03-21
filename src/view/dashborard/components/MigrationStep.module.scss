@@ -1,119 +1,94 @@
-/* Migration Step Styles */
-.migrationFlowStep {
-	background: linear-gradient(135deg, #6366f1, #818cf8);
-	color: white;
-	padding: 1.25rem;
-	border-radius: 0.75rem;
-	flex: 1;
-	transition: all 0.3s ease;
-	box-shadow: 0 4px 16px rgba(99, 102, 241, 0.25);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	backdrop-filter: blur(10px);
-	border: 1px solid rgba(255, 255, 255, 0.2);
+/* ============================================
+   MigrationStep - Light 模式
+   ============================================ */
 
-	&:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
-		border-color: rgba(255, 255, 255, 0.3);
-	}
+/* 基础步骤 */
+.step {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  min-width: 100px;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.migrationFlowStepMigrated {
-	background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-	color: white;
-	padding: 1.25rem;
-	border-radius: 0.75rem;
-	flex: 1;
-	transition: all 0.3s ease;
-	box-shadow: 0 4px 16px rgba(139, 92, 246, 0.25);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	backdrop-filter: blur(10px);
-	border: 1px solid rgba(255, 255, 255, 0.2);
+/* 第一阶段步骤 */
+.stepStage1 {
+  composes: step;
+  border: 1px solid rgba(238, 53, 36, 0.15);
 
-	&:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 6px 20px rgba(139, 92, 246, 0.35);
-		border-color: rgba(255, 255, 255, 0.3);
-	}
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #ff6b35, var(--primary));
+    border-radius: 8px 0 0 8px;
+  }
+
+  &:hover {
+    border-color: rgba(238, 53, 36, 0.3);
+    box-shadow: 0 3px 10px rgba(238, 53, 36, 0.1);
+  }
 }
 
-.migrationFlowStepContent {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-	width: 100%;
+/* 第二阶段步骤 */
+.stepStage2 {
+  composes: step;
+  border: 1px solid rgba(192, 57, 43, 0.15);
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--primary-dark), #922b21);
+    border-radius: 8px 0 0 8px;
+  }
+
+  &:hover {
+    border-color: rgba(192, 57, 43, 0.3);
+    box-shadow: 0 3px 10px rgba(192, 57, 43, 0.1);
+  }
 }
 
-.migrationFlowStepNumber {
-	font-size: 1.25rem;
-	font-weight: 700;
-	line-height: 1;
-	text-align: center;
-	margin: 0;
-	font-family:
-		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-		"Courier New", monospace;
+/* 内容 */
+.stepContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 4px;
 }
 
-.migrationFlowStepTitleContainer {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 0.5rem;
+/* 数字 */
+.stepNumber {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
 }
 
-.migrationFlowStepTitle {
-	font-size: 0.75rem;
-	font-weight: 500;
-	line-height: 1.3;
-	text-align: center;
-	margin: 0;
-	font-family:
-		"Poppins",
-		"Open Sans",
-		ui-sans-serif,
-		system-ui,
-		-apple-system,
-		BlinkMacSystemFont,
-		"Segoe UI",
-		Roboto,
-		"Helvetica Neue",
-		Arial,
-		"Noto Sans",
-		sans-serif;
+.stepStage1 .stepNumber { color: var(--primary); }
+.stepStage2 .stepNumber { color: var(--primary-dark); }
+
+/* 标题 */
+.stepTitle {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.3;
 }
 
-.migrationFlowStepIcon {
-	background: white;
-	color: #6366f1;
-	border-radius: 50%;
-	width: 20px;
-	height: 20px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
-	transition: all 0.3s ease;
-
-	.migrationFlowStep:hover & {
-		transform: scale(1.2) rotate(15deg);
-		box-shadow: 0 4px 12px rgba(99, 102, 241, 0.5);
-	}
-}
-
-.migrationFlowStepIconCompleted {
-	background: white;
-	color: #8b5cf6;
-	box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
-
-	.migrationFlowStepMigrated:hover & {
-		transform: scale(1.2) rotate(15deg);
-		box-shadow: 0 4px 12px rgba(139, 92, 246, 0.5);
-	}
+/* 响应式 */
+@media (max-width: 640px) {
+  .step { padding: 6px 10px; min-width: 80px; }
+  .stepNumber { font-size: 0.95rem; }
+  .stepTitle { font-size: 0.62rem; }
 }

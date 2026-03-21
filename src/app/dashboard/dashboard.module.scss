@@ -1,0 +1,252 @@
+/* Dashboard Page Layout Styles */
+
+/* Base Styles */
+.layout {
+	min-height: 100vh;
+	background-color: #f8f9fa;
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Sidebar Styles */
+.sider {
+	background-color: #1a1a1a;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+	.ant-layout-sider-children {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* Collapse Button */
+	.ant-layout-sider-trigger {
+		background-color: #ee3524 !important;
+		color: white !important;
+		border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+
+		&:hover {
+			background-color: #c22a1a !important;
+		}
+	}
+}
+
+/* Logo Styles */
+.logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1.5rem 1rem;
+	margin-bottom: 1rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+	.logoText {
+		color: white;
+		font-size: 1.25rem;
+		font-weight: 700;
+		margin: 0;
+		font-family: 'Inter', sans-serif;
+		letter-spacing: -0.025em;
+		background: linear-gradient(135deg, #ee3524, #f8d7d5);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+}
+
+/* Menu Styles */
+.menu {
+	flex: 1;
+	background-color: transparent !important;
+
+	.ant-menu-item {
+		margin: 0 8px !important;
+		margin-bottom: 8px !important;
+		border-radius: 8px !important;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+		&:hover {
+			background-color: rgba(238, 53, 36, 0.1) !important;
+		}
+
+		&.ant-menu-item-selected {
+			background-color: #ee3524 !important;
+			box-shadow: 0 4px 12px rgba(238, 53, 36, 0.3) !important;
+
+			.anticon {
+				color: white !important;
+			}
+		}
+
+		.anticon {
+			color: #999 !important;
+			font-size: 16px !important;
+			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+		}
+
+		&:hover .anticon {
+			color: #ee3524 !important;
+		}
+
+		span {
+			color: #e0e0e0 !important;
+			font-weight: 500 !important;
+			font-size: 14px !important;
+		}
+
+		&.ant-menu-item-selected span {
+			color: white !important;
+		}
+	}
+}
+
+/* Main Layout Styles */
+.mainLayout {
+	flex: 1;
+	background-color: #f8f9fa;
+}
+
+/* Header Styles */
+.header {
+	background-color: white;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	padding: 0 2rem;
+	height: 64px;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+	.headerContent {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 100%;
+	}
+
+	.headerTitle {
+		color: #333333;
+		font-size: 1.5rem;
+		font-weight: 700;
+		margin: 0;
+		font-family: 'Inter', sans-serif;
+		letter-spacing: -0.025em;
+		background: linear-gradient(135deg, #ee3524, #c22a1a);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+}
+
+/* Content Styles */
+.content {
+	padding: 2rem;
+	background-color: #f8f9fa;
+	min-height: calc(100vh - 64px);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	position: relative;
+	overflow: hidden;
+
+	/* Background Effects */
+	&::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: 
+			radial-gradient(
+			ellipse at top right,
+			rgba(238, 53, 36, 0.05) 0%,
+			transparent 50%
+			),
+			radial-gradient(
+			ellipse at bottom left,
+			rgba(194, 42, 26, 0.05) 0%,
+			transparent 50%
+			),
+			radial-gradient(
+			ellipse at center,
+			rgba(248, 215, 213, 0.02) 0%,
+			transparent 70%
+			);
+		z-index: 1;
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: -100px;
+		left: 20%;
+		width: 300px;
+		height: 300px;
+		background: linear-gradient(
+			135deg,
+			#ee3524,
+			#f8d7d5
+			);
+		border-radius: 50%;
+		filter: blur(150px);
+		opacity: 0.1;
+		z-index: 1;
+	}
+
+	&::before {
+		content: "";
+		position: absolute;
+		bottom: -100px;
+		right: 20%;
+		width: 250px;
+		height: 250px;
+		background: linear-gradient(135deg, #c22a1a, #ee3524);
+		border-radius: 50%;
+		filter: blur(120px);
+		opacity: 0.08;
+		z-index: 1;
+	}
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.header {
+		padding: 0 1rem;
+
+		.headerTitle {
+			font-size: 1.25rem;
+		}
+	}
+
+	.content {
+		padding: 1rem;
+	}
+
+	.sider {
+		.ant-layout-sider-trigger {
+			width: 100% !important;
+		}
+	}
+}
+
+/* Animation */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.content {
+	animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Loading Animation */
+@keyframes pulse {
+	0%, 100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.7;
+	}
+}
+
+.loading {
+	animation: pulse 1.5s ease-in-out infinite;
+}

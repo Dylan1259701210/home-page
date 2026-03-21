@@ -2,36 +2,35 @@ import React from "react";
 import styles from "./MetricCard.module.scss";
 
 interface MetricCardProps {
-	number: string;
-	title: string;
-	badge?: string;
-	isMigrated?: boolean;
+  number: string;
+  title: string;
+  badge?: string;
+  variant?: "default" | "pending" | "completed" | "migrated";
 }
 
-const formatNumber = (num: string): string => {
-	const number = parseFloat(num);
-	if (isNaN(number)) return num;
-	return number.toLocaleString();
-};
-
 export const MetricCard: React.FC<MetricCardProps> = ({
-	number,
-	title,
-	isMigrated = false,
+  number,
+  title,
+  badge,
+  variant = "default",
 }) => {
-	const formattedNumber = formatNumber(number);
-	return (
-		<div
-			className={
-				isMigrated ? styles.sasMetricCardMigrated : styles.sasMetricCard
-			}
-		>
-			<div className={styles.sasMetricCardContent}>
-				<p className={styles.sasMetricNumber}>{formattedNumber}</p>
-				<p className={styles.sasMetricTitle}>{title}</p>
-			</div>
-		</div>
-	);
+  return (
+    <div className={styles.card}>
+      <div className={styles.cardContent}>
+        {badge && (
+          <div className={styles.cardBadge}>
+            <span className={styles.badgeDot} />
+            <span className={styles.badgeText}>{badge}</span>
+          </div>
+        )}
+        <p className={styles.cardNumber}>{number}</p>
+        <p className={styles.cardTitle}>{title}</p>
+      </div>
+      <div className={styles.cardFooter}>
+        <span className={styles.cardTrend}>View details →</span>
+      </div>
+    </div>
+  );
 };
 
 export default MetricCard;
