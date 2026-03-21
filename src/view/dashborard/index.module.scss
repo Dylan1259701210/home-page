@@ -1,31 +1,33 @@
 /* ============================================
-   Dashboard 主容器
+   Dashboard - 内容区样式
    ============================================ */
 
 .dashboard {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* 标题卡片 */
 .titleCard {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 /* 数据统计 */
 .statsSection {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  gap: 16px;
 }
 
 /* 流水线 */
 .pipelineSection {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 /* 动画 */
@@ -43,6 +45,6 @@
   .statsGrid { grid-template-columns: repeat(2, 1fr); }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .statsGrid { grid-template-columns: 1fr; }
 }

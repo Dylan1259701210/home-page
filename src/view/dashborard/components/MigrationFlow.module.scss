@@ -1,73 +1,31 @@
 /* ============================================
-   MigrationFlow - Light 模式
-   第一阶段(自动化): 橙红色调
-   第二阶段(人工): 深红色调
+   MigrationFlow - 左 → 右 布局
    ============================================ */
 
 .flow {
   background: #ffffff;
   border-radius: 14px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid #e8ecf0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   overflow: hidden;
 }
 
-/* 头部 */
-.flowHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 18px;
-  border-bottom: 1px solid #f0f2f5;
-}
-
-.flowTitle {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  &::before {
-    content: "";
-    display: inline-block;
-    width: 4px;
-    height: 15px;
-    background: var(--primary);
-    border-radius: 2px;
-  }
-}
-
-.flowSubtitle {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-/* 主体 */
 .flowBody {
-  padding: 18px;
-}
-
-/* 流程步骤容器 */
-.stepsContainer {
+  padding: 24px;
   display: flex;
-  align-items: stretch;
-  gap: 0;
+  align-items: center;
+  gap: 20px;
 }
 
-/* ===== 第一阶段：自动化 ===== */
-.stage1 {
+/* 左侧阶段 */
+.leftStage {
   flex: 1;
   background: linear-gradient(135deg, #fff5f4 0%, #fff0ee 100%);
   border: 1px solid rgba(238, 53, 36, 0.12);
-  border-radius: 10px;
-  padding: 14px;
+  border-radius: 12px;
+  padding: 20px;
   position: relative;
-  overflow: hidden;
 
-  /* 顶部色条 */
   &::before {
     content: "";
     position: absolute;
@@ -75,22 +33,20 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #ff6b35, var(--primary));
-    border-radius: 10px 10px 0 0;
+    background: linear-gradient(90deg, #ff6b35, #EE3524);
+    border-radius: 12px 12px 0 0;
   }
 }
 
-/* ===== 第二阶段：人工 ===== */
-.stage2 {
+/* 右侧阶段 */
+.rightStage {
   flex: 1;
   background: linear-gradient(135deg, #fdf2f2 0%, #fce8e8 100%);
   border: 1px solid rgba(192, 57, 43, 0.12);
-  border-radius: 10px;
-  padding: 14px;
+  border-radius: 12px;
+  padding: 20px;
   position: relative;
-  overflow: hidden;
 
-  /* 顶部色条 */
   &::before {
     content: "";
     position: absolute;
@@ -98,101 +54,101 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--primary-dark), #922b21);
-    border-radius: 10px 10px 0 0;
+    background: linear-gradient(90deg, #c0392b, #922b21);
+    border-radius: 12px 12px 0 0;
   }
 }
 
-/* 步骤行 */
-.stepsRow {
+/* 阶段头部 */
+.stageHeader {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 12px;
-  padding-top: 6px;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(238, 53, 36, 0.1);
 }
 
-/* 箭头 */
+.stageHeaderDark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(192, 57, 43, 0.1);
+}
+
+.stageIcon {
+  font-size: 1.1rem;
+}
+
+.stageName {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+/* 步骤轨道 */
+.stepsTrack {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* 步骤箭头 */
 .stepArrow {
   display: flex;
   align-items: center;
+  padding: 0 4px;
+}
+
+.arrow {
+  font-size: 1rem;
+  font-weight: bold;
+  color: rgba(238, 53, 36, 0.4);
+}
+
+.arrowDark {
+  font-size: 1rem;
+  font-weight: bold;
+  color: rgba(192, 57, 43, 0.4);
+}
+
+/* 中间箭头 */
+.centerArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
-.arrowIcon {
-  font-size: 0.85rem;
-  font-weight: bold;
-}
-
-.stage1 .arrowIcon { color: rgba(238, 53, 36, 0.35); }
-.stage2 .arrowIcon { color: rgba(192, 57, 43, 0.35); }
-
-/* 向下箭头 */
-.downArrow {
-  display: flex;
-  justify-content: center;
-  padding: 8px 0;
-  align-self: stretch;
-}
-
-.downArrowIcon {
+.arrowRight {
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  background: linear-gradient(135deg, #EE3524, #c0392b);
+  color: white;
   border-radius: 50%;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   font-weight: bold;
-}
-
-.stage1 + .downArrow .downArrowIcon {
-  background: linear-gradient(135deg, #ff6b35, var(--primary));
-  color: white;
-  box-shadow: 0 3px 10px rgba(238, 53, 36, 0.25);
-}
-
-.stage2 + .downArrow .downArrowIcon,
-.stage2 .downArrowIcon {
-  background: linear-gradient(135deg, var(--primary-dark), #922b21);
-  color: white;
-  box-shadow: 0 3px 10px rgba(192, 57, 43, 0.25);
-}
-
-/* 阶段标签 */
-.stageLabel {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-.stage1 .stageLabel {
-  background: linear-gradient(135deg, #ff6b35, var(--primary));
-  color: white;
-  box-shadow: 0 2px 8px rgba(238, 53, 36, 0.2);
-}
-
-.stage2 .stageLabel {
-  background: linear-gradient(135deg, var(--primary-dark), #922b21);
-  color: white;
-  box-shadow: 0 2px 8px rgba(192, 57, 43, 0.2);
+  box-shadow: 0 4px 12px rgba(238, 53, 36, 0.3);
 }
 
 /* 响应式 */
-@media (max-width: 800px) {
-  .stepsContainer {
+@media (max-width: 900px) {
+  .flowBody {
     flex-direction: column;
-    gap: 10px;
   }
   
-  .downArrow {
+  .centerArrow {
     transform: rotate(90deg);
-    padding: 0;
+  }
+  
+  .leftStage,
+  .rightStage {
+    width: 100%;
   }
 }
