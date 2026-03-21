@@ -18,49 +18,47 @@ export const MigrationFlow: React.FC<MigrationFlowProps> = ({ steps }) => {
 
     return (
         <div className={styles.flow}>
-            <div className={styles.flowBody}>
-                {/* 左侧：Automation */}
-                <div className={styles.leftStage}>
-                    <div className={styles.stageHeader}>
-                        <span className={styles.stageIcon}>⚡</span>
-                        <span className={styles.stageName}>Fully Automatic</span>
+            <div className={styles.content}>
+                {/* 左侧卡片 - 第一阶段 */}
+                <div className={styles.leftCard}>
+                    <div className={styles.stepsArea}>
+                        <div className={styles.stepsRow}>
+                            {stage1Steps.map((step, idx) => (
+                                <React.Fragment key={idx}>
+                                    <MigrationStep number={step.number} title={step.title} stage={1} />
+                                    {idx < stage1Steps.length - 1 && (
+                                        <span className={`${styles.arrow} ${styles.arrowOrange}`}>→</span>
+                                    )}
+                                </React.Fragment>
+                            ))}
+                        </div>
                     </div>
-                    <div className={styles.stepsTrack}>
-                        {stage1Steps.map((step, idx) => (
-                            <React.Fragment key={idx}>
-                                <MigrationStep number={step.number} title={step.title} stage={1} />
-                                {idx < stage1Steps.length - 1 && (
-                                    <div className={styles.stepArrow}>
-                                        <span className={styles.arrow}>→</span>
-                                    </div>
-                                )}
-                            </React.Fragment>
-                        ))}
+                    <div className={`${styles.footer} ${styles.footerOrange}`}>
+                        ⚡ Fully Automatic
                     </div>
                 </div>
 
-                {/* 中间：向右箭头 */}
-                <div className={styles.centerArrow}>
-                    <div className={styles.arrowRight}>→</div>
+                {/* 中间箭头 */}
+                <div className={styles.center}>
+                    <span className={styles.centerArrow}>→</span>
                 </div>
 
-                {/* 右侧：Human SME */}
-                <div className={styles.rightStage}>
-                    <div className={styles.stageHeaderDark}>
-                        <span className={styles.stageIcon}>👤</span>
-                        <span className={styles.stageName}>Managed by Human SME & Powered by Code Jarvis</span>
+                {/* 右侧卡片 - 第二阶段 */}
+                <div className={styles.rightCard}>
+                    <div className={styles.stepsArea}>
+                        <div className={styles.stepsRow}>
+                            {stage2Steps.map((step, idx) => (
+                                <React.Fragment key={idx}>
+                                    <MigrationStep number={step.number} title={step.title} stage={2} />
+                                    {idx < stage2Steps.length - 1 && (
+                                        <span className={`${styles.arrow} ${styles.arrowRed}`}>→</span>
+                                    )}
+                                </React.Fragment>
+                            ))}
+                        </div>
                     </div>
-                    <div className={styles.stepsTrack}>
-                        {stage2Steps.map((step, idx) => (
-                            <React.Fragment key={idx}>
-                                <MigrationStep number={step.number} title={step.title} stage={2} />
-                                {idx < stage2Steps.length - 1 && (
-                                    <div className={styles.stepArrow}>
-                                        <span className={styles.arrowDark}>→</span>
-                                    </div>
-                                )}
-                            </React.Fragment>
-                        ))}
+                    <div className={`${styles.footer} ${styles.footerRed}`}>
+                        👤 Managed by Human SME & Powered by Code Jarvis
                     </div>
                 </div>
             </div>

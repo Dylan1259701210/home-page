@@ -1,154 +1,118 @@
 /* ============================================
-   MigrationFlow - 左 → 右 布局
+   MigrationFlow - HSBC 设计风格
    ============================================ */
 
 .flow {
   background: #ffffff;
   border-radius: 14px;
-  border: 1px solid #e8ecf0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   overflow: hidden;
 }
 
-.flowBody {
-  padding: 24px;
+.content {
   display: flex;
-  align-items: center;
-  gap: 20px;
+  align-items: stretch;
+  gap: 16px;
 }
 
-/* 左侧阶段 */
-.leftStage {
+/* 左侧卡片 - 第一阶段 */
+.leftCard {
   flex: 1;
-  background: linear-gradient(135deg, #fff5f4 0%, #fff0ee 100%);
-  border: 1px solid rgba(238, 53, 36, 0.12);
   border-radius: 12px;
-  padding: 20px;
-  position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #ff6b35, #EE3524);
-    border-radius: 12px 12px 0 0;
-  }
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fffaf5;
 }
 
-/* 右侧阶段 */
-.rightStage {
+/* 右侧卡片 - 第二阶段 */
+.rightCard {
   flex: 1;
-  background: linear-gradient(135deg, #fdf2f2 0%, #fce8e8 100%);
-  border: 1px solid rgba(192, 57, 43, 0.12);
   border-radius: 12px;
-  padding: 20px;
-  position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #c0392b, #922b21);
-    border-radius: 12px 12px 0 0;
-  }
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fef5f5;
 }
 
-/* 阶段头部 */
-.stageHeader {
+/* 步骤区域 */
+.stepsArea {
+  flex: 1;
+  padding: 20px 16px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(238, 53, 36, 0.1);
+  justify-content: center;
 }
 
-.stageHeaderDark {
+/* 步骤行 */
+.stepsRow {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(192, 57, 43, 0.1);
-}
-
-.stageIcon {
-  font-size: 1.1rem;
-}
-
-.stageName {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #1a1a2e;
-}
-
-/* 步骤轨道 */
-.stepsTrack {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
-/* 步骤箭头 */
-.stepArrow {
-  display: flex;
-  align-items: center;
-  padding: 0 4px;
-}
-
+/* 箭头 */
 .arrow {
   font-size: 1rem;
   font-weight: bold;
-  color: rgba(238, 53, 36, 0.4);
+  flex-shrink: 0;
 }
 
-.arrowDark {
-  font-size: 1rem;
-  font-weight: bold;
-  color: rgba(192, 57, 43, 0.4);
+.arrowOrange {
+  color: #ee3524;
+}
+
+.arrowRed {
+  color: #dc2626;
+}
+
+/* 底部说明栏 */
+.footer {
+  padding: 10px 16px;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.footerOrange {
+  color: #ee3524;
+  background: rgba(238, 53, 36, 0.06);
+}
+
+.footerRed {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.06);
 }
 
 /* 中间箭头 */
-.centerArrow {
+.center {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.arrowRight {
+.centerArrow {
   width: 44px;
   height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #EE3524, #c0392b);
-  color: white;
+  background: #ee3524;
   border-radius: 50%;
-  font-size: 1.2rem;
+  color: white;
+  font-size: 1.1rem;
   font-weight: bold;
-  box-shadow: 0 4px 12px rgba(238, 53, 36, 0.3);
 }
 
 /* 响应式 */
 @media (max-width: 900px) {
-  .flowBody {
+  .content {
     flex-direction: column;
   }
   
-  .centerArrow {
+  .center {
     transform: rotate(90deg);
-  }
-  
-  .leftStage,
-  .rightStage {
-    width: 100%;
   }
 }

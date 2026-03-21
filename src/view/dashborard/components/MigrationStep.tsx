@@ -19,14 +19,11 @@ export const MigrationStep: React.FC<MigrationStepProps> = ({
   stage = 1,
 }) => {
   const formattedNumber = formatNumber(number);
-  const stepClass = stage === 1 ? styles.stepStage1 : styles.stepStage2;
 
   return (
-    <div className={stepClass}>
-      <div className={styles.stepContent}>
-        <p className={styles.stepNumber}>{formattedNumber}</p>
-        <p className={styles.stepTitle}>{title}</p>
-      </div>
+    <div className={stage === 1 ? styles.stepOrange : styles.stepRed}>
+      <span className={styles.stepNumber}>{formattedNumber}</span>
+      <span className={styles.stepTitle}>{title}</span>
     </div>
   );
 };

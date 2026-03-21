@@ -30,16 +30,16 @@
   position: relative;
   display: inline-block;
 
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 42px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary), #ff6b5a);
-    border-radius: 2px;
-  }
+//   &::after {
+//     content: "";
+//     position: absolute;
+//     bottom: -5px;
+//     left: 0;
+//     width: 42px;
+//     height: 3px;
+//     background: linear-gradient(90deg, var(--primary), #ff6b5a);
+//     border-radius: 2px;
+//   }
 }
 
 .headerSubtitle {

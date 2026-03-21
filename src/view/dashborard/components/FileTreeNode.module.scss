@@ -1,196 +1,144 @@
 /* ============================================
-   FileTreeNode - Light 模式
+   FileTreeNode - hover整体
    ============================================ */
 
-.selectNone { user-select: none; }
-
-.fileTreeItem {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  border: 1px solid transparent;
-
-  &:hover {
-    background: var(--primary-bg);
-    border-color: rgba(238, 53, 36, 0.1);
-  }
+.nodeWrapper {
+  user-select: none;
 }
 
-.cursorPointer { cursor: pointer; }
-.cursorDefault { cursor: default; }
+/* hover整体 */
+.hoverBox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
 
-/* 展开/折叠图标 */
-.fileTreeToggle {
+.hoverBox:hover {
+  background: #fff5f4;
+}
+
+/* 展开/收起图标 */
+.toggle {
   width: 16px;
   height: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.65rem;
+  color: #94a3b8;
   flex-shrink: 0;
-  border-radius: 3px;
-  transition: background 0.15s;
-
-  &:hover { background: rgba(238, 53, 36, 0.1); }
+  cursor: pointer;
 }
 
-.chevronDown {
-  font-size: 0.65rem;
-  color: var(--primary);
+/* 文件夹图标 */
+.icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: #EE3524;
+  flex-shrink: 0;
+  cursor: pointer;
 }
 
-.chevronRight {
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  transition: color 0.15s;
-
-  .fileTreeItem:hover & { color: var(--primary); }
-}
-
-/* 文件/文件夹图标 */
-.fileTreeIcon { flex-shrink: 0; }
-
-.folderIcon {
-  font-size: 0.95rem;
-  color: var(--primary);
-  transition: all 0.15s;
-
-  .fileTreeItem:hover & {
-    color: var(--primary-dark);
-    transform: scale(1.05);
-  }
-}
-
-.fileIcon {
+/* 名称 - 无link */
+.name {
   font-size: 0.85rem;
-  color: var(--text-muted);
-  transition: color 0.15s;
-
-  .fileTreeItem:hover & { color: var(--text-secondary); }
-}
-
-/* 文件名 */
-.fileName {
-  flex: 1;
-  font-size: 0.85rem;
+  color: #1a1a2e;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  font-family: inherit;
+  flex-shrink: 0;
+  max-width: 200px;
 }
 
-.folderName {
-  font-weight: 500;
-  color: var(--text-primary);
-
-  .fileTreeItem:hover & { color: var(--primary); }
-}
-
-.fileText {
-  font-weight: 400;
-  color: var(--text-secondary);
-
-  .fileTreeItem:hover & { color: var(--text-primary); }
-}
-
-/* 链接 */
-.linkText {
-  color: var(--primary);
+/* 名称和链接 - 整体 */
+.linkWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;
-
-  &:hover { color: var(--primary-dark); }
+  color: #EE3524;
 }
 
-.externalLink {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  transition: color 0.15s;
-
-  &:hover { color: var(--primary); }
+.linkWrapper:hover .nameLink,
+.linkWrapper:hover .linkIcon {
+  color: #c0392b;
 }
 
-/* 数量标签 */
-.fileCount {
+/* 名称 - 有link */
+.nameLink {
+  font-size: 0.85rem;
+  color: #EE3524;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+/* 链接图标 */
+.linkIcon {
+  font-size: 0.75rem;
+  color: #EE3524;
+  flex-shrink: 0;
+}
+
+/* 数量 */
+.count {
   font-size: 0.7rem;
   font-weight: 500;
-  color: var(--text-muted);
+  color: #64748b;
   background: #f1f5f9;
-  padding: 2px 7px;
+  padding: 1px 6px;
   border-radius: 10px;
   border: 1px solid #e2e8f0;
   flex-shrink: 0;
-  transition: all 0.15s;
-
-  .fileTreeItem:hover & {
-    background: var(--primary-bg);
-    border-color: var(--primary-border);
-    color: var(--primary);
-  }
 }
 
 /* 按钮 */
-.checkoutButton {
+.btnCheckout,
+.btnCheckin {
   font-size: 0.7rem;
   padding: 3px 8px;
   border-radius: 5px;
-  border: 1px solid var(--primary-border);
-  background: var(--primary-bg);
-  color: var(--primary);
+  border: 1px solid;
   cursor: pointer;
   transition: all 0.2s;
   font-weight: 500;
   flex-shrink: 0;
   white-space: nowrap;
-
-  &:hover {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-    box-shadow: 0 2px 6px rgba(238, 53, 36, 0.2);
-  }
 }
 
-.checkinButton {
-  font-size: 0.7rem;
-  padding: 3px 8px;
-  border-radius: 5px;
-  border: 1px solid rgba(16, 185, 129, 0.25);
+.btnCheckout {
+  background: #fff5f4;
+  color: #EE3524;
+  border-color: rgba(238, 53, 36, 0.25);
+}
+
+.btnCheckout:hover {
+  background: #EE3524;
+  color: white;
+}
+
+.btnCheckin {
   background: #f0fdf4;
   color: #10b981;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-weight: 500;
-  flex-shrink: 0;
-  white-space: nowrap;
-
-  &:hover {
-    background: #10b981;
-    color: white;
-    border-color: #10b981;
-    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.2);
-  }
+  border-color: rgba(16, 185, 129, 0.25);
 }
 
-/* 子节点缩进 */
-.fileTreeChildren {
-  margin-left: 18px;
-  padding-left: 10px;
-  border-left: 1px dashed #e2e8f0;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  margin-top: 2px;
+.btnCheckin:hover {
+  background: #10b981;
+  color: white;
 }
 
-/* 响应式 */
-@media (max-width: 640px) {
-  .fileTreeItem { padding: 5px 8px; gap: 5px; }
-  .fileName { font-size: 0.8rem; }
-  .fileCount { font-size: 0.65rem; }
-  .checkoutButton, .checkinButton { font-size: 0.65rem; padding: 2px 6px; }
+/* 子节点 */
+.children {
+  padding-left: 16px;
 }
