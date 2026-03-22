@@ -1,123 +1,187 @@
 /* ============================================
-   MigrationFlow - HSBC 企业级设计风格
-   柔和配色 + 专业严谨
+   MigrationFlow - HSBC Business Go 企业级风格
+   主题色 #ee3524，使用更浅的粉色调
+   与 MetricCard 明显区分
    ============================================ */
 
-
-
 .content {
-    background: #ffffff;
-    border-radius: 14px;
-    display: flex;
-    align-items: stretch;
-    gap: 16px;
+  background: linear-gradient(135deg, #fff 0%, #fefefe 100%);
+  border-radius: 20px;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  position: relative;
 }
 
-/* 左侧卡片 - 第一阶段 */
+/* ============================================
+   左侧卡片 - 自动化阶段
+   极浅粉色（更轻盈）
+   ============================================ */
 .leftCard {
-    flex: 1;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    background: #fefefe;
-    border: 1px solid #f5e6e6;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #fffcfc 0%, #fff9f9 100%);
+  border: none;
+  border-right: 1px dashed rgba(238, 53, 36, 0.1);
+  position: relative;
 }
 
-/* 右侧卡片 - 第二阶段 */
+/* 左侧顶部粉色条 */
+.leftCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #fecaca, #fca5a5);
+}
+
+/* ============================================
+   右侧卡片 - 人工阶段
+   浅灰色调（更专业）
+   ============================================ */
 .rightCard {
-    flex: 1;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    background: #fdf9f9;
-    border: 1px solid #f0e6e6;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #fcfcfd 0%, #f8f9fb 100%);
+  border: none;
+  position: relative;
+}
+
+/* 右侧顶部灰蓝色条 */
+.rightCard::before {
+  content: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #cbd5e1, #94a3b8);
+}
+
+.rightCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #cbd5e1, #94a3b8);
 }
 
 /* 步骤区域 */
 .stepsArea {
-    flex: 1;
-    padding: 20px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  flex: 1;
+  padding: 28px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* 步骤行 */
 .stepsRow {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: nowrap;
+  justify-content: center;
 }
 
 /* 箭头 */
 .arrow {
-    font-size: 1rem;
-    font-weight: bold;
-    flex-shrink: 0;
+  font-size: 16px;
+  font-weight: 600;
+  flex-shrink: 0;
 }
 
 .arrowOrange {
-    color: #c9a0a0;
+  color: rgba(238, 53, 36, 0.2);
 }
 
 .arrowRed {
-    color: #b89090;
+  color: rgba(148, 163, 184, 0.4);
 }
 
 /* 底部说明栏 */
 .footer {
-    padding: 12px 16px;
-    text-align: center;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
+  padding: 16px 20px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .footerOrange {
-    color: #c41e3a;
-    background: #fdf5f5;
-    border-top: 1px solid #f5e6e6;
+  color: #ef4444;
+  background: rgba(254, 202, 202, 0.3);
+  border-top: 1px solid rgba(254, 202, 202, 0.4);
 }
 
 .footerRed {
-    color: #8b1a1a;
-    background: #faf5f5;
-    border-top: 1px solid #f0e6e6;
+  color: #64748b;
+  background: rgba(203, 213, 225, 0.2);
+  border-top: 1px solid rgba(203, 213, 225, 0.3);
 }
 
-/* 中间箭头 */
+/* 中间分隔 - 品牌红 */
 .center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  padding: 0 12px;
 }
 
 .centerArrow {
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #c41e3a, #8b1a1a);
-    border-radius: 50%;
-    color: white;
-    font-size: 1.1rem;
-    font-weight: bold;
-    box-shadow: 0 2px 8px rgba(196, 30, 58, 0.2);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ee3524, #dc2626);
+  border-radius: 50%;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 3px 12px rgba(238, 53, 36, 0.25);
+  transition: all 0.3s ease;
+}
+
+.centerArrow:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(238, 53, 36, 0.3);
 }
 
 /* 响应式 */
-@media (max-width: 900px) {
-    .content {
-        flex-direction: column;
-    }
+@media (max-width: 1000px) {
+  .content {
+    flex-direction: column;
+  }
 
-    .center {
-        transform: rotate(90deg);
-    }
+  .leftCard {
+    border-right: none;
+    border-bottom: 1px dashed rgba(238, 53, 36, 0.1);
+  }
+
+  .center {
+    padding: 16px 0;
+    transform: rotate(90deg);
+  }
+
+  .stepsRow {
+    flex-wrap: wrap;
+  }
 }

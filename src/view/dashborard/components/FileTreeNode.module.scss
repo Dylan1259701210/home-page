@@ -1,5 +1,6 @@
 /* ============================================
-   FileTreeNode - hover整体
+   FileTreeNode - HSBC Business Go 企业级风格
+   品牌红 #ee3524
    ============================================ */
 
 .nodeWrapper {
@@ -10,94 +11,119 @@
 .hoverBox {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 8px;
-  border-radius: 6px;
-  transition: background 0.15s;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  cursor: default;
 }
 
 .hoverBox:hover {
-  background: #fff5f4;
+  background: rgba(238, 53, 36, 0.04);
 }
 
 /* 展开/收起图标 */
 .toggle {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.65rem;
-  color: #94a3b8;
+  font-size: 10px;
+  color: #9ca3b8;
   flex-shrink: 0;
   cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.toggle:hover {
+  color: #ee3524;
 }
 
 /* 文件夹图标 */
 .icon {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
-  color: #EE3524;
+  font-size: 14px;
+  color: #ee3524;
   flex-shrink: 0;
   cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icon:hover {
+  transform: scale(1.1);
 }
 
 /* 名称 - 无link */
 .name {
-  font-size: 0.85rem;
-  color: #1a1a2e;
+  font-size: 13px;
+  color: #1a1f36;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   flex-shrink: 0;
-  max-width: 200px;
+  max-width: 220px;
+  font-weight: 500;
 }
 
 /* 名称和链接 - 整体 */
 .linkWrapper {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 3px;
   cursor: pointer;
-  color: #EE3524;
+  color: #ee3524;
+  transition: all 0.2s ease;
+}
+
+.linkWrapper:hover {
+  color: #c41d15;
 }
 
 .linkWrapper:hover .nameLink,
 .linkWrapper:hover .linkIcon {
-  color: #c0392b;
+  color: #c41d15;
 }
 
 /* 名称 - 有link */
 .nameLink {
-  font-size: 0.85rem;
-  color: #EE3524;
+  font-size: 13px;
+  color: #ee3524;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 200px;
+  max-width: 220px;
+  font-weight: 500;
+  transition: color 0.2s ease;
 }
 
 /* 链接图标 */
 .linkIcon {
-  font-size: 0.75rem;
-  color: #EE3524;
+  font-size: 12px;
+  color: #ee3524;
   flex-shrink: 0;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.linkWrapper:hover .linkIcon {
+  opacity: 1;
 }
 
 /* 数量 */
 .count {
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: #64748b;
+  font-size: 11px;
+  font-weight: 600;
+  color: #5e6687;
   background: #f1f5f9;
-  padding: 1px 6px;
-  border-radius: 10px;
+  padding: 3px 10px;
+  border-radius: 12px;
   border: 1px solid #e2e8f0;
   flex-shrink: 0;
 }
@@ -105,40 +131,44 @@
 /* 按钮 */
 .btnCheckout,
 .btnCheckin {
-  font-size: 0.7rem;
-  padding: 3px 8px;
-  border-radius: 5px;
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 8px;
   border: 1px solid;
   cursor: pointer;
-  transition: all 0.2s;
-  font-weight: 500;
+  transition: all 0.2s ease;
+  font-weight: 600;
   flex-shrink: 0;
   white-space: nowrap;
 }
 
 .btnCheckout {
-  background: #fff5f4;
-  color: #EE3524;
-  border-color: rgba(238, 53, 36, 0.25);
+  background: rgba(238, 53, 36, 0.04);
+  color: #ee3524;
+  border-color: rgba(238, 53, 36, 0.2);
 }
 
 .btnCheckout:hover {
-  background: #EE3524;
+  background: #ee3524;
   color: white;
+  border-color: #ee3524;
+  box-shadow: 0 2px 10px rgba(238, 53, 36, 0.25);
 }
 
 .btnCheckin {
-  background: #f0fdf4;
+  background: rgba(16, 185, 129, 0.04);
   color: #10b981;
-  border-color: rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.2);
 }
 
 .btnCheckin:hover {
   background: #10b981;
   color: white;
+  border-color: #10b981;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.25);
 }
 
 /* 子节点 */
 .children {
-  padding-left: 16px;
+  padding-left: 20px;
 }

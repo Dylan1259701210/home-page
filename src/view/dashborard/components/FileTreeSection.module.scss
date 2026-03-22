@@ -1,12 +1,17 @@
 /* ============================================
-   FileTreeSection - Light 模式
+   FileTreeSection - HSBC Business Go 企业级风格
+   轻量化 + 专业感
    ============================================ */
 
 .fileTreeSection {
+  --primary: #ee3524;
+  --text-primary: #1a1f36;
+  --text-secondary: #5e6687;
+  --text-muted: #9ca3b8;
+  
   background: #ffffff;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
   overflow: hidden;
 }
 
@@ -16,36 +21,44 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
+  padding: 18px 24px;
   background: #fafbfc;
   border: none;
-  border-bottom: 1px solid #f0f2f5;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s ease;
+}
 
-  &:hover { background: #f5f7fa; }
+.fileTreeSectionHeader:hover { 
+  background: #f5f6f8;
 }
 
 .fileTreeSectionHeaderLeft {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
 }
 
 .fileTreeSectionHeaderIcon {
-  width: 32px;
-  height: 32px;
-  border-radius: 7px;
-  background: var(--primary-bg);
-  border: 1px solid var(--primary-border);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(238, 53, 36, 0.06);
+  border: 1px solid rgba(238, 53, 36, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.fileTreeSectionHeader:hover .fileTreeSectionHeaderIcon {
+  background: rgba(238, 53, 36, 0.08);
+  border-color: rgba(238, 53, 36, 0.15);
 }
 
 .fileTreeSectionHeaderIconSvg {
-  font-size: 0.95rem;
-  color: var(--primary);
+  font-size: 18px;
+  color: #ee3524;
 }
 
 .fileTreeSectionHeaderText {
@@ -54,54 +67,55 @@
 }
 
 .fileTreeSectionHeaderTitle {
-  font-size: 0.9rem;
+  font-size: 15px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: #1a1f36;
   margin: 0;
 }
 
 .fileTreeSectionHeaderRight {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .fileTreeSectionHeaderStatus {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.72rem;
-  color: var(--text-muted);
+  gap: 6px;
+  font-size: 12px;
+  color: #9ca3b8;
+}
 
-  &::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--primary);
-    animation: statusPulse 2s ease-in-out infinite;
-  }
+.fileTreeSectionHeaderStatus::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ee3524;
+  animation: statusPulse 2s ease-in-out infinite;
 }
 
 @keyframes statusPulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.5; }
 }
 
 .fileTreeSectionHeaderToggle {
-  color: var(--text-muted);
-  font-size: 0.75rem;
+  color: #9ca3b8;
+  font-size: 12px;
+  transition: transform 0.3s ease;
 }
 
 /* 内容区 */
 .fileTreeSectionContent {
-  padding: 14px 16px;
+  padding: 20px 24px;
 }
 
 .fileTreeSectionContentInner {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
 }
 
 /* 搜索框 */
@@ -113,61 +127,83 @@
 
 .searchIcon {
   position: absolute;
-  left: 11px;
-  color: var(--text-muted);
-  font-size: 0.85rem;
+  left: 14px;
+  color: #9ca3b8;
+  font-size: 14px;
   pointer-events: none;
 }
 
 .searchInput {
   width: 100%;
-  padding: 8px 34px 8px 34px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 7px;
-  color: var(--text-primary);
-  font-size: 0.85rem;
+  padding: 12px 44px 12px 42px;
+  background: #f8f9fb;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  color: #1a1f36;
+  font-size: 14px;
   font-family: inherit;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+}
 
-  &::placeholder { color: var(--text-muted); }
+.searchInput::placeholder { 
+  color: #9ca3b8; 
+}
 
-  &:focus {
-    outline: none;
-    border-color: rgba(238, 53, 36, 0.4);
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(238, 53, 36, 0.08);
-  }
+.searchInput:focus {
+  outline: none;
+  border-color: rgba(238, 53, 36, 0.25);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(238, 53, 36, 0.06);
 }
 
 .searchClear {
   position: absolute;
-  right: 8px;
-  width: 20px;
-  height: 20px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #e2e8f0;
+  background: #e8ecf0;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+}
 
-  &:hover { background: rgba(238, 53, 36, 0.1); }
+.searchClear:hover { 
+  background: rgba(238, 53, 36, 0.1); 
 }
 
 .searchClearIcon {
-  width: 11px;
-  height: 11px;
-  color: var(--text-muted);
+  width: 12px;
+  height: 12px;
+  color: #9ca3b8;
 }
 
 /* 文件树列表 */
 .fileTreeSectionContentGrid {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
   max-height: 500px;
   overflow-y: auto;
+}
+
+/* 滚动条 */
+.fileTreeSectionContentGrid::-webkit-scrollbar {
+  width: 5px;
+}
+
+.fileTreeSectionContentGrid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.fileTreeSectionContentGrid::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 3px;
+}
+
+.fileTreeSectionContentGrid::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.12);
 }
