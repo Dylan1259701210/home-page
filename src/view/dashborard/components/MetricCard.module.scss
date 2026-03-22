@@ -1,6 +1,6 @@
 /* ============================================
-   MetricCard - HSBC 设计风格
-   白色背景 + #EE3524 点缀
+   MetricCard - HSBC 企业级设计风格
+   柔和配色 + 专业严谨
    ============================================ */
 
 .card {
@@ -9,7 +9,7 @@
   padding: 20px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
 
 /* 顶部主题色条 */
@@ -20,7 +20,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: #ee3524;
+  background: linear-gradient(90deg, #c41e3a, #8b1a1a);
 }
 
 .cardContent {
@@ -40,13 +40,13 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #ee3524;
+  background: #c41e3a;
 }
 
 .badgeText {
   font-size: 0.65rem;
   font-weight: 600;
-  color: #ee3524;
+  color: #c41e3a;
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }

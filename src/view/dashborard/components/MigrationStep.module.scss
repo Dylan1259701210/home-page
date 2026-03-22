@@ -1,5 +1,5 @@
 /* ============================================
-   MigrationStep - HSBC 设计风格
+   MigrationStep - HSBC 企业级设计风格
    ============================================ */
 
 /* 基础步骤 */
@@ -18,11 +18,13 @@
 /* 橙色步骤 - 第一阶段 */
 .stepOrange {
   composes: step;
+  border: 1px solid #f5e6e6;
 }
 
 /* 深红步骤 - 第二阶段 */
 .stepRed {
   composes: step;
+  border: 1px solid #f0e6e6;
 }
 
 /* 数字 */
@@ -31,28 +33,14 @@
   font-weight: 700;
   line-height: 1;
   font-variant-numeric: tabular-nums;
-}
-
-.stepOrange .stepNumber {
-  color: #ee3524;
-}
-
-.stepRed .stepNumber {
-  color: #dc2626;
+  color: #1a1a2e;
 }
 
 /* 标题 */
 .stepTitle {
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   line-height: 1.3;
-}
-
-.stepOrange .stepTitle {
-  color: #1a1a2e;
-}
-
-.stepRed .stepTitle {
-  color: #1a1a2e;
+  color: #64748b;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import {
     SearchOutlined,
     FolderOutlined,
@@ -7,20 +7,11 @@ import {
     DownOutlined,
 } from "@ant-design/icons";
 import { Modal } from "antd";
-import FileTreeNode from "./FileTreeNode";
+import FileTreeNode, { TreeNode } from "./FileTreeNode";
 import styles from "./FileTreeSection.module.scss";
 
-interface FileTreeNodeType {
-    id: string;
-    name: string;
-    type: "folder" | "file";
-    count?: number;
-    link?: string;
-    children?: FileTreeNodeType[];
-}
-
 interface FileTreeSectionProps {
-    fileTreeData: FileTreeNodeType[];
+    fileTreeData: TreeNode[];
 }
 
 export const FileTreeSection: React.FC<FileTreeSectionProps> = ({
@@ -37,22 +28,7 @@ export const FileTreeSection: React.FC<FileTreeSectionProps> = ({
     const [showCheckoutModal, setShowCheckoutModal] = useState(false);
     const [currentItemId, setCurrentItemId] = useState<string>("");
 
-    // 默认展开更多层级
-    useEffect(() => {
-        const expandAll = (nodes: FileTreeNodeType[], depth: number = 0) => {
-            if (depth > 2) return; // 展开到第3层
-            nodes.forEach((node) => {
-                if (node.type === "folder") {
-                    expandedFolders.add(node.id);
-                    if (node.children) {
-                        expandAll(node.children, depth + 1);
-                    }
-                }
-            });
-        };
-        expandAll(fileTreeData);
-        setExpandedFolders(new Set(expandedFolders));
-    }, []);
+    // 默认全部收起，不预展开任何节点
 
     const toggleFolder = (id: string) => {
         const newExpanded = new Set(expandedFolders);
@@ -67,9 +43,9 @@ export const FileTreeSection: React.FC<FileTreeSectionProps> = ({
     const filteredFileTree = useMemo(() => {
         if (!searchTerm) return fileTreeData;
 
-        const filterNodes = (nodes: FileTreeNodeType[]): FileTreeNodeType[] => {
-            return nodes.reduce((acc: FileTreeNodeType[], node) => {
-                const matchesSearch = node.name
+        const filterNodes = (nodes: TreeNode[]): TreeNode[] => {
+            return nodes.reduce((acc: TreeNode[], node) => {
+                const matchesSearch = node.server_name
                     .toLowerCase()
                     .includes(searchTerm.toLowerCase());
 
@@ -178,7 +154,7 @@ export const FileTreeSection: React.FC<FileTreeSectionProps> = ({
                                     <div key={rootNode.id} className={styles.fileTreeNode}>
                                         <FileTreeNode
                                             node={rootNode}
-                                            isExpanded={expandedFolders.has(rootNode.id)}
+                                            expandedIds={expandedFolders}
                                             onToggle={toggleFolder}
                                             depth={0}
                                             checkedOutItems={checkedOutItems}
