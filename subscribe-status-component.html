@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>订阅状态 · Web Component</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f7f8fa;
+      --surface-warm: #fff1f0;
+      --fg: #1f1f1f;
+      --fg-2: #4b5563;
+      --muted: #697386;
+      --meta: #d32029;
+      --border: #d9dce3;
+      --border-soft: #eef0f4;
+      --accent: #d32029;
+      --accent-on: #ffffff;
+      --accent-hover: color-mix(in oklab, #d32029, black 8%);
+      --accent-active: color-mix(in oklab, #d32029, black 14%);
+      --success: #22a06b;
+      --warn: #faad14;
+      --danger: #cf1322;
+      --blue: #1677ff;
+      --blue-soft: #e6f4ff;
+      --font-display: "Ant Sans", "Alibaba PuHuiTi", Inter, Arial, sans-serif;
+      --font-body: "Ant Sans", "Alibaba PuHuiTi", Inter, Arial, sans-serif;
+      --font-mono: "SF Mono", ui-monospace, Menlo, monospace;
+      --text-xs: 12px;
+      --text-sm: 14px;
+      --text-base: 16px;
+      --text-2xl: 32px;
+      --leading-body: 1.52;
+      --leading-tight: 1.08;
+      --tracking-display: -0.018em;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-12: 48px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-pill: 9999px;
+      --elev-raised: 0 18px 42px rgba(31,31,31,0.10);
+      --motion-fast: 140ms;
+      --motion-base: 220ms;
+      --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--surface);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: var(--leading-body);
+      -webkit-font-smoothing: antialiased;
+      padding: 48px 32px;
+    }
+
+    .demo-header {
+      max-width: 800px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+    .demo-header h1 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 600;
+      margin: 0 0 8px;
+      letter-spacing: var(--tracking-display);
+    }
+    .demo-header p {
+      color: var(--fg-2);
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .demo-grid {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .demo-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .demo-card .card-head {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .demo-card .card-head .card-title {
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .demo-card .card-body {
+      padding: 24px;
+    }
+    .demo-card .card-body .mock-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .demo-card .card-body .mock-header .mock-title h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      margin: 0 0 4px;
+      letter-spacing: var(--tracking-display);
+    }
+    .demo-card .card-body .mock-header .mock-title p {
+      margin: 0;
+      color: var(--fg-2);
+      font-size: 15px;
+    }
+
+    /* ─── Docs ─── */
+    .docs-section {
+      max-width: 800px;
+      margin: 48px auto 0;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+    }
+    .docs-section h3 {
+      margin: 0 0 16px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .docs-section pre {
+      background: #f6f8fa;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+    .docs-section code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      background: #f6f8fa;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .usage-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+    .usage-table th, .usage-table td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-soft);
+      font-size: 13px;
+    }
+    .usage-table th {
+      font-weight: 600;
+      color: var(--fg-2);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .usage-table td:first-child code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-header">
+    <h1><code>&lt;subscribe-status&gt;</code></h1>
+    <p>四种状态：<span style="color:var(--warn);">等待中</span> / <span style="color:var(--blue);">待审批</span> / <span style="color:var(--success);">创建中</span> / <span style="color:var(--accent);font-weight:500;">立即订阅（可点击）</span></p>
+  </div>
+
+  <div class="demo-grid">
+
+    <!-- State 1: Padding -->
+    <div class="demo-card">
+      <div class="card-head">
+        <span class="card-title">状态：<code>padding</code></span>
+        <subscribe-status state="padding"></subscribe-status>
+      </div>
+      <div class="card-body">
+        <div class="mock-header">
+          <div class="mock-title">
+            <h2>Agent Studio</h2>
+            <p>设计、测试和部署 AI Agent 工作流</p>
+          </div>
+          <subscribe-status state="padding"></subscribe-status>
+        </div>
+      </div>
+    </div>
+
+    <!-- State 2: Padding Approve -->
+    <div class="demo-card">
+      <div class="card-head">
+        <span class="card-title">状态：<code>padding-approve</code></span>
+        <subscribe-status state="padding-approve"></subscribe-status>
+      </div>
+      <div class="card-body">
+        <div class="mock-header">
+          <div class="mock-title">
+            <h2>Agent Studio</h2>
+            <p>设计、测试和部署 AI Agent 工作流</p>
+          </div>
+          <subscribe-status state="padding-approve"></subscribe-status>
+        </div>
+      </div>
+    </div>
+
+    <!-- State 3: Namespace Create -->
+    <div class="demo-card">
+      <div class="card-head">
+        <span class="card-title">状态：<code>namespace-create</code></span>
+        <subscribe-status state="namespace-create"></subscribe-status>
+      </div>
+      <div class="card-body">
+        <div class="mock-header">
+          <div class="mock-title">
+            <h2>Agent Studio</h2>
+            <p>设计、测试和部署 AI Agent 工作流</p>
+          </div>
+          <subscribe-status state="namespace-create"></subscribe-status>
+        </div>
+      </div>
+    </div>
+
+    <!-- State 4: Subscribe (active) -->
+    <div class="demo-card">
+      <div class="card-head">
+        <span class="card-title">状态：<code>subscribe</code> <span style="font-weight:400;color:var(--accent);font-size:12px;">← 可点击</span></span>
+        <subscribe-status state="subscribe"></subscribe-status>
+      </div>
+      <div class="card-body">
+        <div class="mock-header">
+          <div class="mock-title">
+            <h2>Agent Studio</h2>
+            <p>设计、测试和部署 AI Agent 工作流</p>
+          </div>
+          <subscribe-status state="subscribe"></subscribe-status>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── Usage docs ─── -->
+  <div class="docs-section">
+    <h3>使用方式</h3>
+    <pre>&lt;subscribe-status state="padding"&gt;&lt;/subscribe-status&gt;
+&lt;subscribe-status state="padding-approve"&gt;&lt;/subscribe-status&gt;
+&lt;subscribe-status state="namespace-create"&gt;&lt;/subscribe-status&gt;
+&lt;subscribe-status state="subscribe"&gt;&lt;/subscribe-status&gt;</pre>
+
+    <table class="usage-table">
+      <tr>
+        <th>状态</th>
+        <th>按钮文案</th>
+        <th>提示标题</th>
+        <th>默认操作</th>
+      </tr>
+      <tr>
+        <td><code>padding</code></td>
+        <td>订阅 · 等待中</td>
+        <td>等待开通</td>
+        <td>联系客户成功 / 查看进度</td>
+      </tr>
+      <tr>
+        <td><code>padding-approve</code></td>
+        <td>订阅 · 待审批</td>
+        <td>待审批</td>
+        <td>催办审批 / 联系客户成功</td>
+      </tr>
+      <tr>
+        <td><code>namespace-create</code></td>
+        <td>订阅 · 创建中</td>
+        <td>命名空间创建中</td>
+        <td>查看创建进度 / 联系客户成功</td>
+      </tr>
+      <tr>
+        <td><code>subscribe</code></td>
+        <td>立即订阅 <span style="color:var(--accent);font-weight:500;">（可点击）</span></td>
+        <td>订阅工作台</td>
+        <td>查看定价方案 / 联系客户成功</td>
+      </tr>
+    </table>
+  </div>
+
+<script>
+class SubscribeStatus extends HTMLElement {
+  static observedAttributes = ['state'];
+
+  #state;
+  #tipOpen = false;
+  #tipEl;
+  #btnEl;
+  #boundClose = this.#closeTip.bind(this);
+  #boundKeydown = this.#onKeydown.bind(this);
+
+  constructor() {
+    super();
+    this.#state = this.getAttribute('state') || 'padding';
+  }
+
+  attributeChangedCallback(name, oldVal, newVal) {
+    if (name === 'state' && oldVal !== newVal) {
+      this.#state = newVal;
+      this.#render();
+    }
+  }
+
+  connectedCallback() {
+    this.#render();
+    this.#bindEvents();
+  }
+
+  disconnectedCallback() {
+    this.#unbindEvents();
+  }
+
+  get state() { return this.#state; }
+  set state(val) {
+    if (val !== this.#state) {
+      this.#state = val;
+      this.setAttribute('state', val);
+    }
+  }
+
+  #config = {
+    'padding': {
+      btnLabel: '订阅 · 等待中',
+      tipTitle: '等待开通',
+      tipDesc: '订阅功能正在等待开通，预计 1–2 个工作日完成配置。开通完成后即可使用全部功能。',
+      statusLabel: '状态：等待开通',
+      statusType: 'wait',
+      actions: [
+        { icon: 'cs', label: '联系客户成功', desc: '专属客户经理一对一协助', action: 'contact_cs' },
+        { icon: 'progress', label: '查看开通进度', desc: '了解当前处理进展', action: 'view_progress' },
+      ]
+    },
+    'padding-approve': {
+      btnLabel: '订阅 · 待审批',
+      tipTitle: '待审批',
+      tipDesc: '订阅申请已提交，等待管理员审批。审批通过后即可开通订阅。',
+      statusLabel: '状态：待审批',
+      statusType: 'approve',
+      actions: [
+        { icon: 'urge', label: '催办审批', desc: '通知管理员尽快处理', action: 'urge_approve' },
+        { icon: 'cs', label: '联系客户成功', desc: '专属客户经理一对一协助', action: 'contact_cs' },
+      ]
+    },
+    'namespace-create': {
+      btnLabel: '订阅 · 创建中',
+      tipTitle: '命名空间创建中',
+      tipDesc: '命名空间正在创建中，创建完成后即可开通订阅。此过程通常需要 3–5 分钟。',
+      statusLabel: '状态：创建中',
+      statusType: 'progress',
+      actions: [
+        { icon: 'progress', label: '查看创建进度', desc: '实时查看命名空间创建状态', action: 'view_progress' },
+        { icon: 'cs', label: '联系客户成功', desc: '专属客户经理一对一协助', action: 'contact_cs' },
+      ]
+    },
+    'subscribe': {
+      btnLabel: '立即订阅',
+      tipTitle: '订阅工作台',
+      tipDesc: '订阅后可解锁全部功能：无限制 Agent 构建、自定义工具集成、团队协作、企业级安全策略与审计日志。',
+      statusLabel: '按需付费 · 即开即用',
+      statusType: 'subscribe',
+      actions: [
+        { icon: 'plan', label: '查看定价方案', desc: '了解所有套餐与报价', action: 'view_plans' },
+        { icon: 'cs', label: '联系客户成功', desc: '专属客户经理一对一协助', action: 'contact_cs' },
+      ]
+    }
+  };
+
+  #render() {
+    const cfg = this.#config[this.#state] || this.#config['padding'];
+
+    const isSubscribe = this.#state === 'subscribe';
+    const btnDisabled = isSubscribe ? '' : 'disabled';
+
+    this.innerHTML = `
+      <div class="ss-wrap">
+        <button class="ss-btn${isSubscribe ? ' ss-btn--active' : ''}" ${btnDisabled} aria-label="${cfg.tipTitle}">
+          ${isSubscribe ? `
+          <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+          ` : `
+          <svg class="ss-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2v-5"/>
+          </svg>
+          `}
+          <span class="ss-label">${cfg.btnLabel}</span>
+          ${isSubscribe ? '' : `<span class="ss-badge ss-badge--${cfg.statusType}"></span>`}
+        </button>
+        <div class="ss-tip" role="dialog" aria-label="${cfg.tipTitle}">
+          <div class="ss-tip-bar ss-tip-bar--${cfg.statusType}"></div>
+          <div class="ss-tip-body">
+            <div class="ss-tip-header">
+              <div class="ss-tip-hleft">
+                <div class="ss-tip-icon ss-tip-icon--${cfg.statusType}">
+                  ${this.#statusIcon(cfg.statusType)}
+                </div>
+                <span class="ss-tip-title">${cfg.tipTitle}</span>
+              </div>
+              <button class="ss-tip-close" aria-label="关闭">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            <div class="ss-tip-desc">${cfg.tipDesc}</div>
+            <div class="ss-tip-status ss-tip-status--${cfg.statusType}">${cfg.statusLabel}</div>
+            <div class="ss-tip-actions">
+              ${cfg.actions.map((a, i) => `
+                <button class="ss-ta" data-action="${a.action}">
+                  <span class="ss-ta-icon ss-ta-icon--${a.icon}">${this.#actionIcon(a.icon)}</span>
+                  <span class="ss-ta-text">
+                    <span class="ss-ta-label">${a.label}</span>
+                    <span class="ss-ta-desc">${a.desc}</span>
+                  </span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    this.#tipEl = this.querySelector('.ss-tip');
+    this.#btnEl = this.querySelector('.ss-btn');
+  }
+
+  #bindEvents() {
+    this.#unbindEvents();
+
+    const wrap = this.querySelector('.ss-wrap');
+    const tip = this.#tipEl;
+    const closeBtn = this.querySelector('.ss-tip-close');
+
+    if (!wrap || !tip) return;
+
+    this._hoverIn = () => this.#openTip();
+    this._hoverOut = (e) => {
+      if (!e.relatedTarget || !e.relatedTarget.closest?.('.ss-wrap')) {
+        if (!this.#tipOpen) this.#closeTip();
+      }
+    };
+    this._clickBtn = () => this.#toggleTip();
+    this._clickClose = () => this.#closeTip();
+
+    wrap.addEventListener('mouseenter', this._hoverIn);
+    wrap.addEventListener('mouseleave', this._hoverOut);
+    this.#btnEl?.addEventListener('click', this._clickBtn);
+    if (this.#state === 'subscribe' && this.#btnEl) {
+      this.#btnEl.addEventListener('click', this.#handleSubscribe);
+    }
+    closeBtn?.addEventListener('click', this._clickClose);
+
+    // Action buttons
+    this.querySelectorAll('.ss-ta').forEach(el => {
+      el.addEventListener('click', () => {
+        const action = el.dataset.action;
+        this.#handleAction(action);
+      });
+    });
+
+    document.addEventListener('click', this.#boundClose);
+    document.addEventListener('keydown', this.#boundKeydown);
+  }
+
+  #unbindEvents() {
+    const wrap = this.querySelector('.ss-wrap');
+    if (wrap && this._hoverIn) {
+      wrap.removeEventListener('mouseenter', this._hoverIn);
+      wrap.removeEventListener('mouseleave', this._hoverOut);
+    }
+    const closeBtn = this.querySelector('.ss-tip-close');
+    if (closeBtn && this._clickClose) {
+      closeBtn.removeEventListener('click', this._clickClose);
+    }
+    if (this.#btnEl && this._clickBtn) {
+      this.#btnEl.removeEventListener('click', this._clickBtn);
+    }
+
+    document.removeEventListener('click', this.#boundClose);
+    document.removeEventListener('keydown', this.#boundKeydown);
+  }
+
+  #openTip() {
+    if (this.#tipEl) this.#tipEl.classList.add('open');
+  }
+
+  #closeTip() {
+    this.#tipOpen = false;
+    if (this.#tipEl) this.#tipEl.classList.remove('open');
+  }
+
+  #toggleTip() {
+    this.#tipOpen = !this.#tipOpen;
+    if (this.#tipOpen) {
+      this.#openTip();
+    } else {
+      this.#closeTip();
+    }
+  }
+
+  #onKeydown(e) {
+    if (e.key === 'Escape' && this.#tipEl?.classList.contains('open')) {
+      this.#closeTip();
+      this.#tipOpen = false;
+    }
+  }
+
+  #handleSubscribe = (e) => {
+    e.stopPropagation();
+    this.dispatchEvent(new CustomEvent('subscribe', {
+      bubbles: true,
+      composed: true,
+      detail: { state: this.#state }
+    }));
+  };
+
+  #handleAction(action) {
+    const map = {
+      contact_cs: () => alert('正在转接客户成功经理…'),
+      view_progress: () => alert('正在加载进度面板…'),
+      urge_approve: () => alert('已发送催办通知给管理员。'),
+      view_plans: () => alert('正在打开定价方案页面…'),
+    };
+    const fn = map[action];
+    if (fn) fn();
+    this.#closeTip();
+    this.#tipOpen = false;
+  }
+
+  #statusIcon(type) {
+    if (type === 'wait') return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 4"/></svg>`;
+    if (type === 'approve') return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>`;
+    if (type === 'progress') return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>`;
+    if (type === 'subscribe') return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2v-5"/></svg>`;
+    return '';
+  }
+
+  #actionIcon(icon) {
+    const icons = {
+      cs: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+      progress: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
+      urge: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>`,
+      plan: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>`,
+    };
+    return icons[icon] || '';
+  }
+}
+
+customElements.define('subscribe-status', SubscribeStatus);
+</script>
+
+<style>
+/* ─── Component styles ─── */
+.ss-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.ss-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-standard),
+              background var(--motion-fast) var(--ease-standard),
+              box-shadow var(--motion-fast) var(--ease-standard);
+  white-space: nowrap;
+  user-select: none;
+  position: relative;
+}
+.ss-btn:disabled {
+  cursor: pointer;
+}
+.ss-btn:hover:disabled {
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+.ss-btn--active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-on);
+  cursor: pointer;
+}
+.ss-btn--active:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+.ss-btn--active:active {
+  background: var(--accent-active);
+  border-color: var(--accent-active);
+}
+.ss-btn--active .ss-icon { opacity: 1; }
+.ss-btn--active .ss-label { color: var(--accent-on); }
+
+.ss-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+.ss-label {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.ss-badge {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: ss-pulse 2s ease-in-out infinite;
+}
+.ss-badge--wait {
+  background: var(--warn);
+}
+.ss-badge--approve {
+  background: var(--blue);
+}
+.ss-badge--progress {
+  background: var(--success);
+}
+
+@keyframes ss-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ─── Tooltip ─── */
+.ss-tip {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 13px;
+  line-height: 1.55;
+  border-radius: var(--radius-md);
+  width: 310px;
+  box-shadow: var(--elev-raised);
+  border: 1px solid var(--border);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px) scale(0.97);
+  transition: opacity var(--motion-base) var(--ease-standard),
+              transform var(--motion-base) var(--ease-standard);
+  z-index: 300;
+  overflow: hidden;
+}
+.ss-tip.open {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.ss-tip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  right: 32px;
+  border: 7px solid transparent;
+  border-bottom-color: var(--bg);
+  filter: drop-shadow(0 -1px 0 var(--border));
+}
+
+.ss-tip-bar {
+  height: 3px;
+}
+.ss-tip-bar--wait {
+  background: linear-gradient(90deg, var(--warn), color-mix(in srgb, var(--warn) 40%, var(--blue)));
+}
+.ss-tip-bar--approve {
+  background: linear-gradient(90deg, var(--blue), color-mix(in srgb, var(--blue) 50%, var(--success)));
+}
+.ss-tip-bar--progress {
+  background: linear-gradient(90deg, var(--success), color-mix(in srgb, var(--success) 50%, var(--blue)));
+}
+.ss-tip-bar--subscribe {
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 50%, var(--blue)));
+}
+
+.ss-tip-body {
+  padding: 16px 18px 14px;
+}
+
+.ss-tip-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.ss-tip-hleft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ss-tip-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.ss-tip-icon svg { width: 16px; height: 16px; }
+.ss-tip-icon--wait {
+  background: #fffbe6;
+  color: var(--warn);
+}
+.ss-tip-icon--approve {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+.ss-tip-icon--progress {
+  background: #e8f5e9;
+  color: var(--success);
+}
+.ss-tip-icon--subscribe {
+  background: #fff1f0;
+  color: var(--accent);
+}
+
+.ss-tip-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+.ss-tip-close {
+  width: 22px; height: 22px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--muted);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--motion-fast);
+  padding: 0;
+}
+.ss-tip-close:hover { background: var(--surface); }
+.ss-tip-close svg { width: 14px; height: 14px; }
+
+.ss-tip-desc {
+  color: var(--fg-2);
+  margin-bottom: 10px;
+}
+
+.ss-tip-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+.ss-tip-status::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: ss-pulse 2s ease-in-out infinite;
+}
+.ss-tip-status--wait {
+  background: #fffbe6;
+  border: 1px solid #ffe58f;
+  color: #8c6e00;
+}
+.ss-tip-status--wait::before { background: var(--warn); }
+.ss-tip-status--approve {
+  background: var(--blue-soft);
+  border: 1px solid #91caff;
+  color: #0958d9;
+}
+.ss-tip-status--approve::before { background: var(--blue); }
+.ss-tip-status--progress {
+  background: #e8f5e9;
+  border: 1px solid #b7eb8f;
+  color: #389e0d;
+}
+.ss-tip-status--progress::before { background: var(--success); }
+.ss-tip-status--subscribe {
+  background: #fff1f0;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+.ss-tip-status--subscribe::before { background: var(--accent); }
+
+.ss-tip-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ss-ta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--motion-fast);
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  color: var(--fg);
+  width: 100%;
+}
+.ss-ta:hover {
+  background: var(--surface);
+}
+.ss-ta-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.ss-ta-icon svg {
+  width: 16px;
+  height: 16px;
+}
+.ss-ta-icon--cs {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+.ss-ta-icon--progress {
+  background: #e8f5e9;
+  color: var(--success);
+}
+.ss-ta-icon--urge {
+  background: #fff1f0;
+  color: var(--accent);
+}
+.ss-ta-text {
+  display: flex;
+  flex-direction: column;
+}
+.ss-ta-label {
+  font-size: 13px;
+  font-weight: 500;
+}
+.ss-ta-desc {
+  font-size: 12px;
+  color: var(--muted);
+}
+</style>
+
+</body>
+</html>
